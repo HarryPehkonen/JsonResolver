@@ -117,10 +117,6 @@ SCENARIO("JsonResolver detects circular dependencies", "[resolver]") {
                     resolver.resolve(fragments, "A"),
                     CircularDependencyError
                 );
-                /// REQUIRE_THROWS_WITH(
-                ///     resolver.resolve(fragments, "A"),
-                ///     Catch::Matchers::Contains("Circular dependency detected: A -> B -> C -> A")
-                /// );
             }
         }
     }
