@@ -62,14 +62,27 @@ public:
     virtual void visit(class ArrayNode& node) = 0;
 };
 
-// Exception for reporting evaluation context in error messages
+// Class for tracking evaluation context and building error paths
 class EvaluationContext {
     std::vector<std::string> path_;
     
 public:
-    void push(const std::string& component) { path_.push_back(component); }
-    void pop() { if (!path_.empty()) path_.pop_back(); }
+    // Add element to the path
+    void push(const std::string& component) { 
+        path_.push_back(component); 
+    }
     
+    // Remove last element from path
+    void pop() { 
+        if (!path_.empty()) path_.pop_back(); 
+    }
+    
+    // Get the current path for dependency tracking
+    const std::vector<std::string>& path() const { 
+        return path_; 
+    }
+    
+    // Get string representation of path for error messages
     std::string path_string() const {
         std::string result;
         for (const auto& component : path_) {
@@ -86,7 +99,9 @@ public:
             : context_(context) {
             context_.push(component);
         }
-        ~ScopedComponent() { context_.pop(); }
+        ~ScopedComponent() { 
+            context_.pop(); 
+        }
     };
 };
 

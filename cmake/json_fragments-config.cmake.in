@@ -1,0 +1,11 @@
+@PACKAGE_INIT@
+
+include(CMakeFindDependencyMacro)
+
+# Find dependencies
+find_dependency(nlohmann_json 3.11.2)
+
+# Include targets file
+include("${CMAKE_CURRENT_LIST_DIR}/json_fragments-targets.cmake")
+
+check_required_components(json_fragments)
